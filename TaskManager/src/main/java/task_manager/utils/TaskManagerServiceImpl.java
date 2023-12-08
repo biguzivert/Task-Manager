@@ -1,20 +1,59 @@
 package task_manager.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task_manager.dto.TaskResponse;
+import task_manager.model.Task;
+import task_manager.repository.TaskRepository;
 import task_manager.service.TaskService;
 
 @Service
 public class TaskManagerServiceImpl implements TaskService {
 
+    @Autowired
+    TaskRepository taskRepository;
+
     @Override
-    public TaskResponse createTask() {
-        return null;
+    public TaskResponse createTask(String title, String description, String priority) {
+        TaskResponse taskResponse = new TaskResponse();
+        if(title == null){
+            taskResponse.setResult(false);
+            taskResponse.setTask(null);
+            return taskResponse;
+        }
+        Task task = new Task(title, description, priority);
+        task.setStatus("В процессе");
+        taskResponse.setResult(true);
+        taskResponse.setTask(task);
+        taskRepository.save(task);
+        return taskResponse;
     }
 
     @Override
-    public TaskResponse editTask() {
-        return null;
+    public TaskResponse editTask(int id, String title, String description, String status, String priority) {
+        TaskResponse taskResponse = new TaskResponse();
+        Task task = taskRepository.getTaskById(id);
+        if(id <= 1){
+            taskResponse.setResult(false);
+            taskResponse.setTask(null);
+            return taskResponse;
+        }
+        if(title != null){
+            task.setTitle(title);
+        }
+        if(description != null){
+            task.setDescription(description);
+        }
+        if(status != null){
+            task.setStatus(status);
+        }
+        if(priority != null){
+            task.setPriority(priority);
+        }
+        taskRepository.save(task);
+        taskResponse.setResult(true);
+        taskResponse.setTask(task);
+        return taskResponse;
     }
 
     @Override
@@ -23,7 +62,18 @@ public class TaskManagerServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponse deleteTask() {
-        return null;
+    public TaskResponse deleteTask(int taskId) {
+        TaskResponse taskResponse = new TaskResponse();
+        Task task = taskRepository.getTaskById(taskId);
+        if(task == null){
+            taskResponse.setResult(false);
+            taskResponse.setTask(null);
+            return taskResponse;
+        }
+        taskResponse.setResult(true);
+        taskResponse.setTask(task);
+        taskRepository.delete(task);
+        return taskResponse;
+
     }
 }

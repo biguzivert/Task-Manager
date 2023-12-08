@@ -1,9 +1,45 @@
 package task_manager.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import task_manager.dto.TaskResponse;
+import task_manager.service.TaskService;
 
 @RestController
 public class TaskManagerController {
+
+    @Autowired
+    private TaskService taskService;
+
+    @PostMapping("/task")
+    public ResponseEntity<TaskResponse> createTask(String title, String description, String priority){
+        TaskResponse taskResponse = taskService.createTask(title, description, priority);
+        if(!taskResponse.isResult()){
+            return ResponseEntity.status(400).body(null);
+        }
+        return ResponseEntity.ok(taskResponse);
+    }
+
+    @DeleteMapping("/task/{id:\\d+}")
+    public ResponseEntity<TaskResponse> deleteTask(@PathVariable int id){
+        TaskResponse taskResponse = taskService.deleteTask(id);
+        if(!taskResponse.isResult()){
+            return ResponseEntity.status(400).body(null);
+        }
+        return ResponseEntity.ok(taskService.deleteTask(id));
+    }
+
+    @PutMapping("/task/{id:\\d+}")
+    public ResponseEntity<TaskResponse> editTask(@PathVariable int id, String title, String description, String status, String priority){
+        return ResponseEntity.ok(taskService.editTask(id, title, description, status, priority));
+    }
+
+    @GetMapping(value = "/task/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TaskResponse> getTask(int taskId){
+        return ResponseEntity.ok(taskService.getTask());
+    }
 
 
 }

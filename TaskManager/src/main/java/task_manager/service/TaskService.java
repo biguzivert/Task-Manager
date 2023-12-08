@@ -4,12 +4,12 @@ import task_manager.dto.TaskResponse;
 import task_manager.repository.TaskRepository;
 
 public interface TaskService {
-    TaskResponse createTask();
+    TaskResponse createTask(String title, String description, String priority);
 
-    TaskResponse editTask();
+    TaskResponse editTask(int id, String title, String description, String status, String priority);
 
     TaskResponse getTask();
 
-    TaskResponse deleteTask();
+    TaskResponse deleteTask(int taskId);
 
 }

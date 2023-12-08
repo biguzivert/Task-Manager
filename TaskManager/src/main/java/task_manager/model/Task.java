@@ -23,5 +23,12 @@ public class Task {
 
     private String priority;
 
+    public Task(){}
+
+    public Task(String title, String description, String priority){
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+    }
 
 }
