@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService{
 
-    UserDetails loadUserByEmail(String email);
+    UserDetails loadUserByUsername(String username);
 
     User findUserbyId(long id);
 
