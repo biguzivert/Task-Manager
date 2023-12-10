@@ -6,10 +6,10 @@ import task_manager.repository.TaskRepository;
 public interface TaskService {
     TaskResponse createTask(String title, String description, String priority);
 
-    TaskResponse editTask(Long id, String title, String description, String status, String priority);
+    TaskResponse editTask(int id, String title, String description, String status, String priority);
 
     TaskResponse getTask();
 
-    TaskResponse deleteTask(Long taskId);
+    TaskResponse deleteTask(int taskId);
 
 }

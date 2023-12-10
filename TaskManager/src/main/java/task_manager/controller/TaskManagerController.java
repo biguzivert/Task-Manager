@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import task_manager.dto.TaskResponse;
 import task_manager.service.TaskService;
 
-@RestController(value = "manager")
+@RestController
 public class TaskManagerController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class TaskManagerController {
     }
 
     @DeleteMapping("/task/{id:\\d+}")
-    public ResponseEntity<TaskResponse> deleteTask(@PathVariable Long id){
+    public ResponseEntity<TaskResponse> deleteTask(@PathVariable int id){
         TaskResponse taskResponse = taskService.deleteTask(id);
         if(!taskResponse.isResult()){
             return ResponseEntity.status(400).body(null);
@@ -32,12 +32,12 @@ public class TaskManagerController {
     }
 
     @PutMapping("/task/{id:\\d+}")
-    public ResponseEntity<TaskResponse> editTask(@PathVariable Long id, String title, String description, String status, String priority){
+    public ResponseEntity<TaskResponse> editTask(@PathVariable int id, String title, String description, String status, String priority){
         return ResponseEntity.ok(taskService.editTask(id, title, description, status, priority));
     }
 
     @GetMapping(value = "/task/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TaskResponse> getTask(Long taskId){
+    public ResponseEntity<TaskResponse> getTask(int taskId){
         return ResponseEntity.ok(taskService.getTask());
     }
 
