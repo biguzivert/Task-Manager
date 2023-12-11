@@ -4,14 +4,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import task_manager.model.Role;
 import task_manager.model.User;
 import task_manager.repository.UserRepository;
 import task_manager.service.UserService;
-
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -71,3 +70,4 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 }
+
