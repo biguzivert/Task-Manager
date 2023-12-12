@@ -33,7 +33,7 @@ public class TaskManagerServiceImpl implements TaskService {
     public TaskResponse editTask(long id, String title, String description, String status, String priority) {
         TaskResponse taskResponse = new TaskResponse();
         Task task = taskRepository.getReferenceById(id);
-        if(id <= 1){
+        if(id <= 0){
             taskResponse.setResult(false);
             taskResponse.setTask(null);
             return taskResponse;
