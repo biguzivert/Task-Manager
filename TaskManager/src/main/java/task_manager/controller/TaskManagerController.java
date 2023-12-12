@@ -3,14 +3,18 @@ package task_manager.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import task_manager.dto.TaskResponse;
 import task_manager.service.TaskService;
 
 @RestController
+@Validated
 @Tag(name = "Контроллер менеджера задач", description = "Позволяет управлять задачами пользователя")
 public class TaskManagerController {
 
@@ -21,7 +25,7 @@ public class TaskManagerController {
             summary = "Создание задачи"
     )
     @PostMapping("/task")
-    public ResponseEntity<TaskResponse> createTask(@Parameter(description = "Заголовок задачи", required = true) String title,
+    public ResponseEntity<TaskResponse> createTask(@NotBlank @Parameter(description = "Заголовок задачи", required = true) String title,
                                                    @Parameter(description = "Описание задачи") String description,
                                                    @Parameter(description = "Уровень приоритетности задачи") String priority){
         TaskResponse taskResponse = taskService.createTask(title, description, priority);
@@ -35,7 +39,7 @@ public class TaskManagerController {
             summary = "Удаление задачи"
     )
     @DeleteMapping("/task/{id:\\d+}")
-    public ResponseEntity<TaskResponse> deleteTask(@PathVariable @Parameter(description = "ID задачи", required = true) Long id){
+    public ResponseEntity<TaskResponse> deleteTask(@PathVariable @Min(0) @Parameter(description = "ID задачи", required = true) Long id){
         TaskResponse taskResponse = taskService.deleteTask(id);
         if(!taskResponse.isResult()){
             return ResponseEntity.status(400).body(null);
@@ -47,7 +51,7 @@ public class TaskManagerController {
             summary = "Изменение существующей задачи"
     )
     @PutMapping("/task/{id:\\d+}")
-    public ResponseEntity<TaskResponse> editTask(@PathVariable @Parameter(description = "ID задачи") Long id,
+    public ResponseEntity<TaskResponse> editTask(@PathVariable @Min(0) @Parameter(description = "ID задачи", required = true) Long id,
                                                  @Parameter(description = "Заголовок задачи") String title,
                                                  @Parameter(description = "Описание задачи") String description,
                                                  @Parameter(description = "Статус задачи") String status,
@@ -59,7 +63,7 @@ public class TaskManagerController {
             summary = "Получение задачи"
     )
     @GetMapping(value = "/task/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TaskResponse> getTask(@PathVariable @Parameter(description = "ID задачи") Long id){
+    public ResponseEntity<TaskResponse> getTask(@PathVariable @Min(0) @Parameter(description = "ID задачи") Long id){
         return ResponseEntity.ok(taskService.getTask(id));
     }
 

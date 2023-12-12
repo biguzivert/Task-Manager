@@ -3,6 +3,8 @@ package task_manager.model;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Entity
@@ -16,7 +18,7 @@ public class Task {
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank
     @Schema(description = "Заголовок задачи")
     private String title;
 
@@ -25,6 +27,7 @@ public class Task {
 
     @Column(nullable = false)
     @Schema(description = "Статус выполнения задачи", example = "В ожидании, В процессе, Завершено")
+    @Pattern(regexp = "[а-яА-я, a-zA-Z]+")
     private String status;
 
     @Schema(description = "Приоритет задачи", example = "Низкий, Средний, Высокий")
