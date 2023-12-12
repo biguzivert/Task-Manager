@@ -9,7 +9,9 @@
 
 Для проверки работы программы можно использовать API-тестер, такой как **Postman** либо **Talend Api Tester (Расширение для Chrome)**
 
-В сервисе настроен Swagger. Путь к Swagger: http://localhost:8080/swagger-ui.html
+В сервисе настроен Swagger. Путь к Swagger: "http://localhost:8080/swagger-ui.html". По данному адресу можно изучить методы контроллера и принимаемые параметры
+
+
 
 
 
