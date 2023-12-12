@@ -11,7 +11,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     private String title;

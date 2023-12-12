@@ -32,7 +32,7 @@ public class TaskManagerServiceImpl implements TaskService {
     @Override
     public TaskResponse editTask(long id, String title, String description, String status, String priority) {
         TaskResponse taskResponse = new TaskResponse();
-        Task task = taskRepository.findById(id);
+        Task task = taskRepository.getReferenceById(id);
         if(id <= 1){
             taskResponse.setResult(false);
             taskResponse.setTask(null);
@@ -58,21 +58,20 @@ public class TaskManagerServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponse getTask() {
-        return null;
+    public TaskResponse getTask(long taskId) {
+        TaskResponse taskResponse = new TaskResponse();
+        Task task = taskRepository.getReferenceById(taskId);
+        taskResponse.setResult(true);
+        taskResponse.setTask(task);
+        return taskResponse;
     }
 
     @Override
     public TaskResponse deleteTask(long taskId) {
         TaskResponse taskResponse = new TaskResponse();
-        Task task = taskRepository.findById(taskId);
-        if(task == null){
-            taskResponse.setResult(false);
-            taskResponse.setTask(null);
-            return taskResponse;
-        }
+        Task task = taskRepository.getReferenceById(taskId);
         taskResponse.setResult(true);
-        taskResponse.setTask(task);
+        taskResponse.setTask(null);
         taskRepository.delete(task);
         return taskResponse;
 

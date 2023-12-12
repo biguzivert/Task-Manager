@@ -8,7 +8,7 @@ public interface TaskService {
 
     TaskResponse editTask(long id, String title, String description, String status, String priority);
 
-    TaskResponse getTask();
+    TaskResponse getTask(long taskId);
 
     TaskResponse deleteTask(long taskId);
 
